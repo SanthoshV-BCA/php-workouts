@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* .loginPopup {
+        position: relative;
+        text-align: center;
+        width: 100%;
+      } */
+
+      .formPopup {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+
+      /* .formPopup {
+        display: none;
+        position: fixed;
+        left: 80%;
+        top: 5%;
+        transform: translate(-50%, 5%);
+        border: 3px solid #999999;
+        z-index: 9;
+      } */
+      .form {
+        width: 300px;
+        padding: 20px;
+        background-color: #fff;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        text-align: center;
+        /* width: 80%; */
+      }
+
+      .form input[type="text"],
+      .form input[type="password"] {
+        width: 80%;
+        padding: 15px;
+        margin: 5px 0 20px 0;
+        border: none;
+        background: #eee;
+      }
+
+      .form input[type="text"]:focus,
+      .form input[type="password"]:focus {
+        background-color: #ddd;
+        outline: none;
+      }
+
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      .container {
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        /* height: 100vh; */
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      img {
+        width: 50px;
+        height: 50px;
+      }
+
+      table {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 85%;
+        margin: auto;
+      }
+
+      thead {
+        background-color: black;
+        color: white;
+      }
+
+      td,
+      th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+      }
+
+      .ed {
+        text-align: center;
+        padding: 5px 5px;
+        background-color: rgb(255, 0, 0);
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn {
+        text-align: center;
+        padding: 5px 5px;
+        background-color: rgb(0, 255, 13);
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .cancel {
+        text-align: center;
+        padding: 5px 5px;
+        background-color: rgb(255, 0, 0);
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Details</h1>
+    <div class="container">
+      <!-- <div id="main"></div> -->
+      <table id="main">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Password</th>
+            <th>gender</th>
+            <!-- <th>Status</th> -->
+            <th>Action</th>
+          </tr>
+        </thead>
+      </table>
+      <div class="loginPopup">
+        <div class="formPopup" id="popupForm">
+          <form method="POST" class="form" id="form">
+            <h2>Update</h2>
+            <!-- <label for="email">
+              <strong>E-mail</strong>
+            </label> -->
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter your name"
+              name="name"
+            />
+            <input
+              type="text"
+              id="phone"
+              placeholder="Enter your phone"
+              name="phone"
+            />
+
+            <input
+              type="text"
+              id="email"
+              placeholder="Enter your Email"
+              name="email"
+            />
+            <!-- <label for="psw">
+              <strong>Password</strong>
+            </label> -->
+            <input
+              type="password"
+              placeholder="Enter your Password"
+              name="password"
+              id="password"
+            />
+            <input
+              type="text"
+              placeholder="Enter your gender"
+              name="gender"
+              id="gender"
+            />
+            <button type="submit" class="btn" id="btns" onclick="update();">
+              Update
+            </button>
+            <button type="button" class="btn cancel" onclick="closeForm()">
+              Close
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <p id="result"></p>
+    <script>
+      function myfunction() {
+        // if (email == "" && password == "") {
+        //     document.getElementById("result").innerHTML = "";
+        //     return;
+        // } else {
+        var obj = new XMLHttpRequest();
+
+        obj.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            var json = JSON.parse(this.responseText);
+            // console.log(json);
+            // var req = this.responseText;
+
+            //   let txt = "";
+            //   for (let x in person) {
+            //     txt += person[x] + " ";
+            //   }
+            var element;
+            var g;
+            var txt = "";
+            var gg;
+            var el;
+            for (let x in json) {
+              element = document.getElementById("main");
+              g = document.createElement("tr");
+              // g.classList.add("sub");
+              element.appendChild(g);
+
+              txt =
+                "<td>" +
+                json[x].id +
+                "</td>" +
+                "<td>" +
+                json[x].name +
+                "</td>" +
+                "<td>" +
+                json[x].email +
+                "</td>" +
+                "<td>" +
+                json[x].phone +
+                " </td>" +
+                "<td>" +
+                json[x].password +
+                "</td>" +
+                "<td>" +
+                json[x].gender +
+                "</td>" +
+                "<td>" +
+                "<button class='ed' onclick='openForm();res(" +
+                json[x].id +
+                ");one();'>update</button>" +
+                "</td>";
+              // console.log(txt);   class="openButton" onclick="openForm()"
+              g.innerHTML = txt;
+
+              // txt = "";
+            }
+            //   document.getElementById("result").innerHTML = txt;
+
+            // console.log(json[0]);
+            // document.getElementById("result").innerHTML = objj.name;
+          }
+        };
+        obj.open("POST", "/santhosh/apitableview/read/index.php", true);
+        obj.send();
+      }
+      myfunction();
+      // location.reload(myfunction());
+    </script>
+    <script></script>
+    <script>
+      // let btn = document.getElementById("btns");
+      // let a = document.getElementById("text");
+
+      // btn.addEventListener("click", update);
+      // form.addEventListener("submit", (e) => {
+      //   if (!validateInputs()) {
+      //     e.preventDefault();
+      //     console.log("form submited");
+      //   }
+      // });
+      function openForm() {
+        document.getElementById("popupForm").style.display = "block";
+      }
+      function closeForm() {
+        document.getElementById("popupForm").style.display = "none";
+        // location.reload();
+        // location.reload();
+      }
+      var upid;
+      function res(value) {
+        upid = value;
+        document.querySelector("#result").innerHTML = upid;
+        // console.log(upid);
+      }
+
+      function update() {
+        // var upid = id;
+        console.log(upid);
+        var upda = new XMLHttpRequest();
+        // document.getElementById("popupForm").style.display = "none";
+        upda.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            var delt = JSON.parse(this.responseText);
+            console.log(delt);
+            document.querySelector("#result").innerHTML = delt;
+            // window.alert("updated success");
+            // closeForm();
+          }
+        };
+
+        var name = document.querySelector("#name").value;
+        var email = document.querySelector("#email").value;
+        var password = document.querySelector("#password").value;
+        var phone = document.querySelector("#phone").value;
+        var gender = document.querySelector("#gender").value;
+        var datas = {
+          name: document.querySelector("#name").value,
+          email: document.querySelector("#email").value,
+          phone: document.querySelector("#phone").value,
+          password: document.querySelector("#password").value,
+          gender: document.querySelector("#gender").value,
+        };
+
+        var data = JSON.stringify(datas);
+        upda.open(
+          "POST",
+          "/santhosh/apitableview/update/index.php?id=" + upid,
+          true
+        );
+        // upda.setRequestHeader(
+        //   "Content-type",
+        //   "application/json; charset=UTF-8"
+        // );
+
+        upda.send(data);
+
+        // myfunction();
+        upda.onload = function () {
+          if (upda.status === 201) {
+            console.log("Post successfully created!");
+            // location.reload();
+          }
+        };
+      }
+
+      function one() {
+        // var upid = id;
+        console.log(upid);
+        var sess = new XMLHttpRequest();
+        // document.getElementById("popupForm").style.display = "none";
+        sess.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            var sample = JSON.parse(this.responseText);
+            console.log(sample);
+            document.querySelector("#name").value = sample.name;
+            document.querySelector("#email").value = sample.email;
+            document.querySelector("#password").value = sample.password;
+            document.querySelector("#phone").value = sample.phone;
+            document.querySelector("#gender").value = sample.gender;
+            // document.querySelector("#result").innerHTML = sample;
+            // window.alert("updated success");
+            // closeForm();
+          }
+        };
+        sess.open(
+          "POST",
+          "/santhosh/apitableview/session/index.php?id=" + upid,
+          true
+        );
+        // upda.setRequestHeader(
+        //   "Content-type",
+        //   "application/json; charset=UTF-8"
+        // );
+
+        sess.send();
+      }
+
+      //       const contactForm = document.getElementById("contact-form");
+
+      // contactForm.addEventListener("submit", function(event) {
+
+      //   event.preventDefault();
+
+      //     var request = new XMLHttpRequest();
+      //     var url = "/php/email-sender.php";
+      //     request.open("POST", url, true);
+      //     request.setRequestHeader("Content-Type", "application/json");
+      //     request.onreadystatechange = function () {
+      //         if (request.readyState === 4 && request.status === 200) {
+      //             var jsonData = JSON.parse(request.response);
+      //             console.log(jsonData);
+      //         }
+      //     };
+      //     var name =  document.getElementById("name").value;
+      //     var email = document.getElementById("email").value;
+      //     var subject = document.getElementById("subject").value;
+      //     var message = document.getElementById("message").value;
+
+      //     var data = JSON.stringify({"name": name, "email": email, "subject": subject, "message": message});
+
+      //     request.send(data);
+
+      // });
+    </script>
+  </body>
+</html>

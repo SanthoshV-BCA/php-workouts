@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .container {
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        /* height: 100vh; */
+      }
+
+      .sub {
+        border: 2px solid white;
+        border-radius: 5px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: 27%;
+        /* background-color: #fff461; */
+        background-color: #fad3cf;
+        margin-bottom: 20px;
+        margin-right: 10px;
+        font-size: 15px;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+        /* margin: auto; */
+      }
+      #main {
+        display: flex;
+        flex-wrap: wrap;
+        margin: auto;
+        justify-content: center;
+        /* align-items: center; */
+      }
+      h1 {
+        color: white;
+        text-align: center;
+      }
+      b {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: #393e46;
+        font-size: 17px;
+      }
+      body {
+        background-color: #060608;
+      }
+      @media screen and (max-width: 1064px) {
+        .sub {
+          width: 36%;
+        }
+      }
+      @media screen and (max-width: 768px) {
+        #main {
+          flex-direction: column;
+          /* align-items: center; */
+        }
+        .sub {
+          width: 100%;
+        }
+        .container {
+          display: block;
+        }
+        b {
+          font-size: 22px;
+        }
+        .sub {
+          /* text-align: center; */
+          width: 75%;
+          font-size: 20px;
+          margin: auto;
+          margin-bottom: 5px;
+        }
+      }
+
+      /* .sub {
+        margin-bottom: 10px;
+      }
+
+      b {
+        font-weight: bold;
+      }
+
+      p {
+        margin: 0;
+      } */
+    </style>
+  </head>
+
+  <body>
+    <h1>Details</h1>
+    <div class="container">
+      <div id="main"></div>
+    </div>
+    <p id="result"></p>
+    <p>
+      <script>
+        function myfunction() {
+          // if (email == "" && password == "") {
+          //     document.getElementById("result").innerHTML = "";
+          //     return;
+          // } else {
+          var obj = new XMLHttpRequest();
+
+          obj.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              var json = JSON.parse(this.responseText);
+              // console.log(json);
+              // var req = this.responseText;
+
+              //   let txt = "";
+              //   for (let x in person) {
+              //     txt += person[x] + " ";
+              //   }
+              var element;
+              var g;
+              var txt = "";
+              var gg;
+              var el;
+              for (let x in json) {
+                element = document.getElementById("main");
+                g = document.createElement("div");
+                g.classList.add("sub");
+                element.appendChild(g);
+
+                txt =
+                  "<b>Name:</b> " +
+                  json[x].name +
+                  "<br> " +
+                  "<b>Email:</b> " +
+                  json[x].email +
+                  "<br> " +
+                  "<b>phone:</b> " +
+                  json[x].phone +
+                  " <br>" +
+                  "<b>Password: </b>" +
+                  json[x].password +
+                  "<br> " +
+                  "<b>gender: </b>" +
+                  json[x].gender +
+                  "<br> ";
+                console.log(txt);
+                g.innerHTML = txt;
+
+                // txt = "";
+              }
+              //   document.getElementById("result").innerHTML = txt;
+
+       
+              console.log(json[0]);
+              // document.getElementById("result").innerHTML = objj.name;
+            }
+          };
+          obj.open("POST", "/santhosh/gridtextview/read/index.php", true);
+          obj.send();
+         
+        }
+        myfunction();
+      </script>
+    </p>
+  </body>
+</html>

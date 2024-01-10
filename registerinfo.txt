@@ -1,0 +1,5 @@
+name: aswin
+Phone: 7894561320
+Email: aswin123@gmail.com
+Password: Aswin@2002
+gender: Male
